@@ -1,0 +1,29 @@
+{
+  "name": "dungeons-and-digits",
+  "version": "1.0.0",
+  "description": "Dungeons and digits game.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sebminecrafter/dungeons-and-digits.git"
+  },
+  "keywords": [
+    "learning",
+    "math"
+  ],
+  "author": "LCV Studios",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Sebminecrafter/dungeons-and-digits/issues"
+  },
+  "homepage": "https://github.com/Sebminecrafter/dungeons-and-digits#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

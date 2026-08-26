@@ -4,17 +4,32 @@ import helpers from "./helpers.js";
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 
-app.get("/", (_request, response) => {
-    response.send("<h1>Dungeons and Digits</h1>");
+app.get("/", async (_request, response) => {
+    response.send(
+        await helpers.getStaticHtml(
+            "home.html",
+            "Dungeons and Digits"
+        )
+    );
 });
 
 app.use(async (_request, response) => {
-    response.status(404).send(await helpers.getStatic("404.html"));
+    response.status(404).send(
+        await helpers.getStaticHtml(
+            "404.html",
+            "404 Not Found"
+        )
+    );
 });
 
 app.use(async (error: unknown, _request: express.Request, response: express.Response, _next: express.NextFunction) => {
     console.error("Server error.", error);
-    response.status(500).send(await helpers.getStatic("500.html"));
+    response.status(500).send(
+        await helpers.getStaticHtml(
+            "500.html",
+            "500 Internal Server Error"
+        )
+    );
 });
 
 app.listen(port, () => {

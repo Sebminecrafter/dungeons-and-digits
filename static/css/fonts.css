@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'UnifrakturMaguntia';
+    src: local('UnifrakturMaguntia'),
+        url('/static/font/UnifrakturMaguntia/UnifrakturMaguntia-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Manufacturing Consent';
+    src: local('Manufacturing Consent Regular'), local('ManufacturingConsent-Regular'),
+        url('/static/font/Manufacturing_Consent/ManufacturingConsent-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'UnifrakturCook';
+    src: local('UnifrakturCook'), local('UnifrakturCook-Bold'),
+        url('/static/font/UnifrakturCook/UnifrakturCook-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: local('Inter'), local('Inter Regular'), local('Inter-Regular'),
+        url('/static/font/Inter/Inter-VariableFont_opsz\,wght.ttf') format('truetype');
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: local('Inter Italic'), local('Inter-Italic'),
+        url('/static/font/Inter/Inter-VariableFont_opsz\,wght.ttf') format('truetype');
+    font-style: italic;
+    font-display: swap;
+}

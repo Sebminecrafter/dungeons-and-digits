@@ -1,0 +1,51 @@
+/* Import other CSS files */
+
+@import url("/static/css/fonts.css");
+@import url("/static/css/nav.css");
+@import url("/static/css/footer.css");
+@import url("/static/css/ui.css");
+
+/* Main styling */
+
+:root {
+    --text: #111111;
+    --background: #EFEFEF;
+    --blackletter-font-1: 'UnifrakturMaguntia', serif;
+    --blackletter-font-2: 'Manufacturing Consent', serif;
+    --blackletter-font-3: 'UnifrakturCook', serif;
+    --sans-font: 'Inter', sans-serif;
+}
+
+html, body {
+    font-family: var(--sans-font);
+    box-sizing: border-box;
+    height: 100vh;
+    max-width: 100vw;
+    margin: 0;
+}
+
+main {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 0 auto;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--text);
+}
+
+body * * {
+    padding: 0.25vw;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: var(--text);
+}

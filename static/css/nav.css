@@ -1,0 +1,26 @@
+nav {
+    display: flex;
+    align-items: center;
+    font-family: var(--blackletter-font-3);
+    font-size: 28px;
+    height: 5vh;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+nav .logo {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+nav .logo p {
+    font-weight: bold;
+}
+
+nav .logo img {
+    height: 75%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    padding: 0;
+}

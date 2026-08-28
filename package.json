@@ -24,8 +24,7 @@
   },
   "homepage": "https://github.com/Sebminecrafter/dungeons-and-digits#readme",
   "dependencies": {
-    "express": "^5.2.1",
-    "file-type": "^22.0.2"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

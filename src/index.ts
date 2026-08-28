@@ -1,6 +1,5 @@
 import express from "express";
 import helpers from "./helpers.js";
-import { fileTypeFromFile } from "file-type";
 
 const app = express();
 const port = Number(process.env.PORT) || 80;

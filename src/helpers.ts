@@ -1,34 +1,38 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-export default { getStatic, getStaticHtml };
+export const STATIC_DIR = path.resolve("static");
 
-const STATIC_DIR = path.resolve("static");
+export default { getStatic, getStaticHtml, STATIC_DIR };
 
-const cssfile = await getStatic("css/style.css") ?? "/* Failed to load, restart server! */";
-const header = (await getStatic("html/header.html") ?? "<p>Failed to load</p>").replaceAll("/* CSSFILE */", cssfile);
-const footer = await getStatic("html/footer.html") ?? "<p>Failed to load</p>";
+const header = await getStatic("html/header.html", "utf-8") ?? "<p>Failed to load</p>";
+const footer = await getStatic("html/footer.html", "utf-8") ?? "<p>Failed to load</p>";
 
-export async function getStatic(filename: string): Promise<string | null> {
+export async function getStatic(filename: string, encoding: BufferEncoding): Promise<string | null>;
+export async function getStatic(filename: string, encoding?: null): Promise<Buffer | null>;
+export async function getStatic(filename: string, encoding?: BufferEncoding | null): Promise<string | Buffer | null> {
     const resolved = path.resolve(STATIC_DIR, filename);
 
-    if (!resolved.startsWith(STATIC_DIR + path.sep) && resolved !== STATIC_DIR) {
-        console.error(`Path traversal attempt blocked: ${filename}`);
-        return null;
-    }
+    if (!resolved.startsWith(STATIC_DIR + path.sep) && resolved !== STATIC_DIR) return null;
 
     try {
         const stat = await fs.stat(resolved);
         if (!stat.isFile()) return null;
 
-        const data = await fs.readFile(resolved, 'utf-8');
-        return data;
+        return encoding
+            ? await fs.readFile(resolved, encoding)
+            : await fs.readFile(resolved);
     } catch (err) {
-        if (err instanceof Error) {
-            console.error('Failed to read file:', err.message);
-        }
+        if (err instanceof Error) console.error(`Failed to read file '${filename}': `, err.message);
         return null;
     }
+}
+
+function getCopyDate(): string {
+    let str: string = "2026"
+    let year: number = new Date().getFullYear();
+    if (year > 2026) str += `-${year}`;
+    return str;
 }
 
 export async function getStaticHtml(filename: string, title: string): Promise<string> {
@@ -37,6 +41,6 @@ export async function getStaticHtml(filename: string, title: string): Promise<st
     html += "\n";
     html += await getStatic(`html/${filename}`);
     html += "\n";
-    html += footer;
+    html += footer.replaceAll("YEARCOPY", getCopyDate());
     return html;
 }

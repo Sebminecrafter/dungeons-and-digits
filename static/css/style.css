@@ -77,3 +77,8 @@ footer {
     text-align: center;
     align-content: center;
 }
+
+footer #footer-logo {
+    height: 64px;
+    width: auto;
+}

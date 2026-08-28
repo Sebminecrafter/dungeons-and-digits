@@ -1,20 +1,11 @@
 import express from "express";
 import helpers from "./helpers.js";
+import { fileTypeFromFile } from "file-type";
 
 const app = express();
 const port = Number(process.env.PORT) || 80;
 
-app.get("/static/{*file}", async (request, response) => {
-    let name = (request.params.file ?? ["/"]).join("/");
-    const file = await helpers.getStatic(name);
-
-    if (file === null) {
-        response.status(404).send("File not found.");
-        return;
-    }
-
-    response.send(file);
-});
+app.use("/static", express.static(helpers.STATIC_DIR));
 
 app.get("/", async (_request, response) => {
     response.send(

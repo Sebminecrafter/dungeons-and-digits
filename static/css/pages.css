@@ -1,0 +1,11 @@
+.error-page {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: fit-content;
+}
+.error-page * {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}

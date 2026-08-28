@@ -15,6 +15,10 @@ app.get("/", async (_request, response) => {
     );
 });
 
+app.get("/500", (_req, _res, next) => {
+  next(new Error("Manual 500 error"));
+});
+
 app.use(async (_request, response) => {
     response.status(404).send(
         await helpers.getStaticHtml(

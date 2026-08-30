@@ -2,13 +2,13 @@
  	font-family: "Yuyu Short", sans-serif;
     background-color: #fdfdfd;
 	transition:0.3s;
-	width:40%;
+	width:120%;
     height:40px;
 }
 .fight-button:hover{
 	font-family: "Yuyu Short", sans-serif;
     background-color: #d3d3d3;
 	transition:0.3s;
-	width:40%;
+	width:125%;
     height:45px;
 }

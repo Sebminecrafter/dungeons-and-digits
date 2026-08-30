@@ -1,4 +1,6 @@
 footer {
+    display: flex;
+    flex-direction: row;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.15);
     min-height: 10%;
@@ -10,4 +12,23 @@ footer {
 footer #footer-logo {
     height: 50px;
     width: auto;
+}
+
+footer .left, footer .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+footer .left {
+    margin-left: auto;
+}
+
+footer .right {
+    margin-right: auto;
+}
+
+footer .spacer {
+    width: 20%;
 }

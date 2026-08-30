@@ -23,7 +23,8 @@
 	transition: 0.3s ease-in-out;
 }
 .fight-button:hover {
-    background-color: #d3d3d3;
+    background-color: #000;
+	color:#fdfdfd;
 	width: 80px;
     height: 48px;
 	font-size: 20px;

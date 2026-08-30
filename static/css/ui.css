@@ -1,14 +1,17 @@
-.fight-button{
+.fight-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
  	font-family: var(--blackletter-font-3);
     background-color: #fdfdfd;
-	transition:0.3s;
-	width:115%;
-    height:115%;
+	transition: 0.3s;
+	width: 115%;
+    height: 115%;
 }
 .fight-button:hover{
 	font-family: var(--blackletter-font-3);
     background-color: #d3d3d3;
-	transition:0.3s;
-	width:125%;
-    height:125%;
+	width: 125%;
+    height: 125%;
 }

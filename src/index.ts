@@ -15,6 +15,15 @@ app.get("/", async (_request, response) => {
     );
 });
 
+app.get("/ui", async (_request, response) => {
+    response.send(
+        await helpers.getStaticHtml(
+            "ui.html",
+            "Dungeons and Digits - UI"
+        )
+    );
+});
+
 app.get("/500", (_req, _res, next) => {
   next(new Error("Manual 500 error"));
 });

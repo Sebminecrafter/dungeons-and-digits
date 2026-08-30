@@ -1,17 +1,30 @@
-.fight-container{
+.fight-container {
 	display: flex;
+	align-self: center;
 	justify-content: center;
 	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
 	height: 100vh;
- 	font-family: var(--blackletter-font-3);
     background-color: #fdfdfd;
-	transition: 0.3s;
-	width: 115%;
-    height: 115%;
+	width: 95%;
+    height: 95%;
 }
-.fight-button:hover{
+.fight-button {
 	font-family: var(--blackletter-font-3);
+	background-color: #fdfdfd;
+	border: 2px solid #000;
+	border-radius: 2px;
+	padding: 1px 2px;
+	font-size: 14px;
+	width: 50px;
+	height: 30px;
+	transition: 0.3s ease-in-out;
+}
+.fight-button:hover {
     background-color: #d3d3d3;
-	width: 125%;
-    height: 125%;
+	width: 80px;
+    height: 48px;
+	font-size: 20px;
+	transition: 0.3s ease-in-out;
 }

@@ -9,6 +9,7 @@
     background-color: #fdfdfd;
 	width: 95%;
     height: 95%;
+	
 }
 .fight-button {
 	font-family: var(--blackletter-font-3);
@@ -25,12 +26,13 @@
 	width: 80px;
     height: 48px;
 	font-size: 20px;
-	transition: hover 0.3s ease-in-out;
+	transition: 0.3s ease-in-out;
+	cursor: crosshair;
 }
 .fight-button:active {
 	opacity: 0.6;
 	width: 70px;
 	height: 38px;
 	font-size: 18px;
-	transition: active 50ms ease-in-out;
+	transition: active 0.3s ease-in-out;
 }

@@ -1,4 +1,5 @@
 .fight-button{
+	left:40px;
  	font-family: var(--blackletter-font-3);
     background-color: #fdfdfd;
 	transition:0.3s;

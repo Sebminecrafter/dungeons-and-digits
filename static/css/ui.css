@@ -9,6 +9,7 @@
     background-color: #fdfdfd;
 	width: 95%;
     height: 95%;
+	cursor:none;
 }
 .fight-button {
 	font-family: var(--blackletter-font-3);
@@ -27,4 +28,5 @@
     height: 48px;
 	font-size: 20px;
 	transition: 0.3s ease-in-out;
+	cursor: crosshair;
 }

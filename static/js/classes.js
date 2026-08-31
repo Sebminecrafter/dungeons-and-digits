@@ -1,16 +1,5 @@
 export class Sprite {
-  constructor(
-    img,
-    width,
-    height,
-    x,
-    y,
-    frameCount,
-    animation,
-    row,
-    rows,
-    columns,
-  ) {
+  constructor(img, width, height, x, y, frameCount, animation, rows, columns) {
     this.img = new Image();
     this.img.src = img;
 
@@ -22,7 +11,6 @@ export class Sprite {
     this.frameCount = frameCount || 1;
     this.currentAnimation = animation || 0;
 
-    this.row = row || 0;
     this.rows = rows || 1;
     this.columns = columns || 1;
   }
@@ -45,10 +33,6 @@ export class Sprite {
 
   getAnimation() {
     return this.currentAnimation;
-  }
-
-  getRow() {
-    return this.row;
   }
 
   getRows() {
@@ -84,11 +68,6 @@ export class Sprite {
     return this.currentAnimation;
   }
 
-  setRow(set) {
-    this.row = set;
-    return this.row;
-  }
-
   setRows(set) {
     this.rows = set;
     return this.rows;
@@ -103,12 +82,24 @@ export class Sprite {
     if (!(ctx instanceof CanvasRenderingContext2D)) return;
 
     // Size of one sprite on the spritesheet
-    const frameWidth = this.img.width / this.columns;
-    const frameHeight = this.img.height / this.rows;
+    const frameWidth = Math.round(this.img.width / this.columns);
+    const frameHeight = Math.round(this.img.height / this.rows);
+
+    let row = 0;
+
+    if (this.currentAnimation >= this.rows * this.columns) {
+      this.currentAnimation = this.rows * this.columns - 1;
+    }
+
+    let relCol = this.currentAnimation % this.columns;
+
+    if (this.currentAnimation >= this.columns) {
+      row = Math.floor(this.currentAnimation / this.columns);
+    }
 
     // Position of the selected sprite
-    const sourceX = this.currentAnimation * frameWidth;
-    const sourceY = this.row * frameHeight;
+    const sourceX = relCol * frameWidth;
+    const sourceY = row * frameHeight;
 
     ctx.drawImage(
       this.img,
@@ -120,10 +111,10 @@ export class Sprite {
       frameHeight,
 
       // Destination rectangle
-      this.x,
-      this.y,
-      this.width,
-      this.height,
+      Math.round(this.x),
+      Math.round(this.y),
+      Math.round(this.width),
+      Math.round(this.height),
     );
   }
 }

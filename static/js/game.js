@@ -1,5 +1,5 @@
-import { Sprite } from "/static/js/classes.js";
-import "/static/js/functions.js";
+import * as classes from "/static/js/classes.js";
+import * as functions from "/static/js/functions.js";
 
 // Global variables
 var backgroundColor = "rgb(255, 255, 255)";
@@ -52,6 +52,11 @@ function updatePlayerPosition() {
 }
 
 function gameLoop() {
+  if (!(ctx instanceof CanvasRenderingContext2D)) {
+    alert("Fatal error. Please reload the page");
+    return;
+  }
+
   calcGlobals();
 
   updatePlayerPosition();
@@ -76,21 +81,7 @@ function setup() {
   // Get canvas context
   ctx = canvas.getContext("2d");
 
-  // Resize it properly
-  resizeCanvas();
-
-  player = new Sprite(
-    "/static/img/lcv.png", // src for img
-    64, // width
-    64, // height
-    canvas.width / 2, // x
-    canvas.height / 2, // y
-    1, // frame count
-    0, // animation
-    0, // row
-    1, // rows
-    1, // columns
-  );
+  ctx.imageSmoothingEnabled = false;
 
   keys = {};
 
@@ -101,6 +92,26 @@ function setup() {
   window.addEventListener("keyup", (e) => {
     keys[e.key] = false;
   });
+
+  // Resize it properly
+  resizeCanvas();
+
+  player = new classes.Sprite(
+    "/static/img/sprites/slatey_mcslateface.png", // src for img
+    64, // width
+    64, // height
+    0, // x
+    0, // y
+    10, // frame count
+    8, // animation
+    4, // rows
+    3, // columns
+  );
+
+  calcGlobals();
+
+  player.setX(centerX);
+  player.setY(centerY);
 
   timer = 0;
   start = new Date().getTime();

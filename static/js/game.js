@@ -1,9 +1,5 @@
-function randomDec(min, max) {
-  return Math.random() * (max - min) + min;
-}
-function random(min, max) {
-  return Math.round(randomDec(min, max));
-}
+import "/static/js/classes.js";
+import "/static/js/functions.js";
 
 var canvas, ctx, player, x, y, timer, start;
 

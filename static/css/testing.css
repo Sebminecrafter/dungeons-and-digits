@@ -1,0 +1,29 @@
+/*
+ * Testing code
+ */
+
+.fight-button {
+	font-family: var(--blackletter-font-3);
+	border: 2px solid #000;
+	border-radius: 2px;
+	padding: 1px 2px;
+	font-size: 14px;
+	width: 50px;
+	height: 30px;
+	transition: 0.3s ease-in-out;
+}
+.fight-button:hover {
+    opacity: 0.8;
+	width: 80px;
+    height: 48px;
+	font-size: 20px;
+	transition: 0.3s ease-in-out;
+	cursor: crosshair;
+}
+.fight-button:active {
+	opacity: 0.6;
+	width: 70px;
+	height: 38px;
+	font-size: 18px;
+	transition: active 0.3s ease-in-out;
+}

@@ -12,6 +12,8 @@ var keys;
 var centerX;
 var centerY;
 
+var playerDirection = { up: false, down: false, left: false, right: false };
+
 var speed = 5;
 
 function calcGlobals() {
@@ -29,26 +31,31 @@ function drawBackground() {
 
 // Update player position based on input
 function updatePlayerPosition() {
-  if (keys["ArrowUp"] || keys["w"]) {
-    player.setY(player.getY() - speed);
-  }
-  if (keys["ArrowDown"] || keys["s"]) {
-    player.setY(player.getY() + speed);
-  }
-  if (keys["ArrowLeft"] || keys["a"]) {
-    player.setX(player.getX() - speed);
-  }
-  if (keys["ArrowRight"] || keys["d"]) {
-    player.setX(player.getX() + speed);
-  }
+  playerDirection["up"] = keys["ArrowUp"] || keys["w"];
+  playerDirection["down"] = keys["ArrowDown"] || keys["s"];
+  playerDirection["left"] = keys["ArrowLeft"] || keys["a"];
+  playerDirection["right"] = keys["ArrowRight"] || keys["d"];
+
+  let yChange =
+    (playerDirection["down"] ? 1 : 0) - (playerDirection["up"] ? 1 : 0);
+  let xChange =
+    (playerDirection["right"] ? 1 : 0) - (playerDirection["left"] ? 1 : 0);
+
+  player.setY(player.getY() + speed * yChange);
+  player.setX(player.getX() + speed * xChange);
 
   // Canvas boundary collisions (Keep player inside the box)
-  if (player.getX() < 0) player.setX(0);
-  if (player.getX() + player.getWidth() > canvas.width)
+
+  // If x/y is less than 0, make it 0, otherwise keep it the same
+  player.setX(player.getX() < 0 ? 0 : player.getX());
+  player.setY(player.getY() < 0 ? 0 : player.getY());
+
+  if (player.getX() + player.getWidth() > canvas.width) {
     player.setX(canvas.width - player.getWidth());
-  if (player.getY() < 0) player.setY(0);
-  if (player.getY() + player.getHeight() > canvas.height)
+  }
+  if (player.getY() + player.getHeight() > canvas.height) {
     player.setY(canvas.height - player.getHeight());
+  }
 }
 
 function gameLoop() {
@@ -66,6 +73,42 @@ function gameLoop() {
   player.draw(ctx);
 
   requestAnimationFrame(gameLoop);
+}
+
+function doLogo(logo) {
+  calcGlobals();
+
+  if (timer >= 3) {
+    requestAnimationFrame(gameLoop);
+    return;
+  }
+
+  if (!(ctx instanceof CanvasRenderingContext2D)) {
+    alert("Fatal error. Please reload the page");
+    return;
+  }
+
+  let opacity;
+  if (timer < 1.5) {
+    opacity = timer / 1.5;
+  } else {
+    opacity = 3 - timer;
+  }
+  console.log(opacity);
+
+  const logoSize = canvas.width / 4;
+  const logoX = canvas.width / 2 - logoSize / 2;
+  const logoY = canvas.height / 2 - logoSize / 2;
+
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = opacity;
+  ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+  ctx.globalAlpha = 1.0;
+
+  requestAnimationFrame(() => {
+    doLogo(logo);
+  });
 }
 
 function setup() {
@@ -113,10 +156,15 @@ function setup() {
   player.setX(centerX);
   player.setY(centerY);
 
-  timer = 0;
   start = new Date().getTime();
+  timer = 0;
 
-  requestAnimationFrame(gameLoop);
+  const logo = new Image();
+  logo.src = "/static/img/lcv.png";
+
+  requestAnimationFrame(() => {
+    doLogo(logo);
+  });
 }
 
 function resizeCanvas() {

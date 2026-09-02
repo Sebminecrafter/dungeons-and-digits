@@ -16,12 +16,6 @@ var playerDirection = { up: false, down: false, left: false, right: false };
 
 var speed = 5;
 
-function calcGlobals() {
-  centerX = canvas.width / 2 - player.getWidth() / 2;
-  centerY = canvas.height / 2 - player.getHeight() / 2;
-  timer = (new Date().getTime() - start) / 1000;
-}
-
 function drawBackground() {
   const oldStyle = ctx.fillStyle;
   ctx.fillStyle = backgroundColor;
@@ -29,24 +23,39 @@ function drawBackground() {
   ctx.fillStyle = oldStyle;
 }
 
-// Update player position based on input
-function updatePlayerPosition() {
+function getDirections() {
   playerDirection["up"] = keys["ArrowUp"] || keys["w"];
   playerDirection["down"] = keys["ArrowDown"] || keys["s"];
   playerDirection["left"] = keys["ArrowLeft"] || keys["a"];
   playerDirection["right"] = keys["ArrowRight"] || keys["d"];
+}
 
+function calcGlobals() {
+  centerX = canvas.width / 2 - player.getWidth() / 2;
+  centerY = canvas.height / 2 - player.getHeight() / 2;
+  timer = (new Date().getTime() - start) / 1000;
+}
+
+// Update player position based on input
+function updatePlayerPosition() {
+  if (!(player instanceof classes.Sprite)) {
+    return;
+  }
   let yChange =
     (playerDirection["down"] ? 1 : 0) - (playerDirection["up"] ? 1 : 0);
   let xChange =
     (playerDirection["right"] ? 1 : 0) - (playerDirection["left"] ? 1 : 0);
 
+  let a = yChange;
+  let b = xChange;
+
+  yChange = b % 1 != 0 ? a / 2 : a;
+  xChange = a % 1 != 0 ? b / 2 : b;
+
   player.setY(player.getY() + speed * yChange);
   player.setX(player.getX() + speed * xChange);
 
   // Canvas boundary collisions (Keep player inside the box)
-
-  // If x/y is less than 0, make it 0, otherwise keep it the same
   player.setX(player.getX() < 0 ? 0 : player.getX());
   player.setY(player.getY() < 0 ? 0 : player.getY());
 
@@ -58,6 +67,25 @@ function updatePlayerPosition() {
   }
 }
 
+function playerAnimation() {
+  if (!(player instanceof classes.Sprite)) {
+    return;
+  }
+  if (playerDirection["up"]) {
+    if (player.getAnimation() != 8) player.setAnimation(8);
+    else player.setAnimation(9);
+  } else if (playerDirection["down"]) {
+    if (player.getAnimation() != 5) player.setAnimation(5);
+    else player.setAnimation(6);
+  } else if (playerDirection["right"]) {
+    if (player.getAnimation() != 0) player.setAnimation(0);
+    else player.setAnimation(1);
+  } else if (playerDirection["left"]) {
+    if (player.getAnimation() != 2) player.setAnimation(2);
+    else player.setAnimation(3);
+  }
+}
+
 function gameLoop() {
   if (!(ctx instanceof CanvasRenderingContext2D)) {
     alert("Fatal error. Please reload the page");
@@ -65,6 +93,8 @@ function gameLoop() {
   }
 
   calcGlobals();
+
+  getDirections();
 
   updatePlayerPosition();
 
@@ -92,9 +122,8 @@ function doLogo(logo) {
   if (timer < 1.5) {
     opacity = timer / 1.5;
   } else {
-    opacity = 3 - timer;
+    opacity = (3 - timer) / 1.5;
   }
-  console.log(opacity);
 
   const logoSize = canvas.width / 4;
   const logoX = canvas.width / 2 - logoSize / 2;
@@ -123,8 +152,6 @@ function setup() {
   }
   // Get canvas context
   ctx = canvas.getContext("2d");
-
-  ctx.imageSmoothingEnabled = false;
 
   keys = {};
 
@@ -165,12 +192,18 @@ function setup() {
   requestAnimationFrame(() => {
     doLogo(logo);
   });
+
+  setInterval(playerAnimation, 100);
 }
 
 function resizeCanvas() {
   // Resizes the canvas to the available area (according to the css/html)
-  canvas.width = canvas.scrollWidth;
-  canvas.height = canvas.scrollHeight;
+  const rect = canvas.getBoundingClientRect();
+
+  canvas.width = Math.round(rect.width);
+  canvas.height = Math.round(rect.height);
+
+  ctx.imageSmoothingEnabled = false;
 }
 
 window.addEventListener("load", setup);

@@ -1,4 +1,5 @@
 import * as classes from "/static/js/classes.js";
+import * as sprites from "/static/js/sprites.js";
 import * as functions from "/static/js/functions.js";
 
 // Global variables
@@ -11,6 +12,7 @@ var start;
 var keys;
 var centerX;
 var centerY;
+var spriteList;
 
 var playerDirection = { up: false, down: false, left: false, right: false };
 
@@ -46,8 +48,8 @@ function updatePlayerPosition() {
   let xChange =
     (playerDirection["right"] ? 1 : 0) - (playerDirection["left"] ? 1 : 0);
 
-  let a = yChange;
-  let b = xChange;
+  let a = yChange,
+    b = xChange;
 
   yChange = b % 1 != 0 ? a / 2 : a;
   xChange = a % 1 != 0 ? b / 2 : b;
@@ -71,18 +73,25 @@ function playerAnimation() {
   if (!(player instanceof classes.Sprite)) {
     return;
   }
+  let anim = player.getAnimation();
   if (playerDirection["up"]) {
-    if (player.getAnimation() != 8) player.setAnimation(8);
+    if (anim != 8) player.setAnimation(8);
     else player.setAnimation(9);
   } else if (playerDirection["down"]) {
-    if (player.getAnimation() != 5) player.setAnimation(5);
+    if (anim != 5) player.setAnimation(5);
     else player.setAnimation(6);
   } else if (playerDirection["right"]) {
-    if (player.getAnimation() != 0) player.setAnimation(0);
+    if (anim != 0) player.setAnimation(0);
     else player.setAnimation(1);
   } else if (playerDirection["left"]) {
-    if (player.getAnimation() != 2) player.setAnimation(2);
+    if (anim != 2) player.setAnimation(2);
     else player.setAnimation(3);
+  } else {
+    if (anim == 0 || anim == 1) player.setAnimation(0);
+    else if (anim == 2 || anim == 3) player.setAnimation(2);
+    else if (anim == 4 || anim == 5 || anim == 6) player.setAnimation(4);
+    else if (anim == 7 || anim == 8 || anim == 9) player.setAnimation(7);
+    else player.setAnimation(4);
   }
 }
 
@@ -100,7 +109,12 @@ function gameLoop() {
 
   drawBackground();
 
-  player.draw(ctx);
+  for (var i = 0; i <= spriteList.length; i++) {
+    let sprite = spriteList[i];
+    if (sprite instanceof classes.Sprite) {
+      sprite.draw(ctx);
+    }
+  }
 
   requestAnimationFrame(gameLoop);
 }
@@ -154,6 +168,7 @@ function setup() {
   ctx = canvas.getContext("2d");
 
   keys = {};
+  spriteList = [];
 
   // Key listeners
   window.addEventListener("keydown", (e) => {
@@ -166,17 +181,28 @@ function setup() {
   // Resize it properly
   resizeCanvas();
 
-  player = new classes.Sprite(
-    "/static/img/sprites/slatey_mcslateface.png", // src for img
-    64, // width
-    64, // height
-    0, // x
-    0, // y
-    10, // frame count
-    8, // animation
-    4, // rows
-    3, // columns
-  );
+  player = sprites.player();
+
+  spriteList.push(player);
+
+  let listOfSprites = [
+    "add_knight",
+    "add_rat_overworld",
+    "basic_addition",
+    "basic_addition_guard",
+    "not_so_basic_addition",
+  ];
+
+  for (var i = 0; i <= listOfSprites.length - 1; i++) {
+    let a = listOfSprites[i];
+    console.log(a);
+    eval(`
+      let ${a} = sprites.${a}();
+      ${a}.setX(100 * i);
+      ${a}.setY(100);
+      spriteList.push(${a});
+    `);
+  }
 
   calcGlobals();
 

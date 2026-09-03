@@ -124,4 +124,7 @@ body, html {
 
 .menu-opt:active {
     transform: scale(0.95);
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #fff;
 }

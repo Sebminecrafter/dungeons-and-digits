@@ -117,7 +117,14 @@ body, html {
 }
 
 .menu-opt:hover {
+	width: 250px;
     background: var(--accent);
     border-color: var(--accent);
     color: #fff;
+}
+.menu-opt:active {
+	width:230px;
+	background: var(--accent-hover);
+	border-color: var(--accent-hover);
+	color: #fff;
 }

@@ -1,1 +1,108 @@
 <button class="fight-button">Fight</button>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Client</title>
+    <link rel="stylesheet" href="testing.css">
+</head>
+<body>
+
+    <div id="ui-layer">
+        <!-- Main Screen -->
+        <section id="screen-main" class="screen active">
+            <div class="menu-wrapper">
+                <h1 class="game-logo">VOIDBOUND</h1>
+                
+                <nav class="menu-nav">
+                    <button class="menu-opt" data-action="start">Launch Game</button>
+                    <button class="menu-opt" data-action="settings">Settings</button>
+                    <button class="menu-opt" data-action="credits">Credits</button>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Settings Screen -->
+        <section id="screen-settings" class="screen">
+            <div class="menu-wrapper">
+                <h2>Configuration</h2>
+                <div class="settings-pane">
+                    <!-- Config values go here -->
+                </div>
+                <button class="menu-opt" data-action="back">Return</button>
+            </div>
+        </section>
+
+        <!-- Credits Screen -->
+        <section id="screen-credits" class="screen">
+            <div class="menu-wrapper">
+                <h2>Credits</h2>
+                <p>Built by Core Team</p>
+                <button class="menu-opt" data-action="back">Return</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Canvas viewport anchor -->
+    <canvas id="stage"></canvas>
+
+    <script src="menu.js">
+        var screens = {
+    main: document.getElementById('screen-main'),
+    settings: document.getElementById('screen-settings'),
+    credits: document.getElementById('screen-credits')
+};
+
+function showScreen(targetKey) {
+    var keys = Object.keys(screens);
+    
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var element = screens[key];
+        
+        if (element) {
+            if (key === targetKey) {
+                element.classList.add('active');
+            } else {
+                element.classList.remove('active');
+            }
+        }
+    }
+}
+
+var uiLayer = document.getElementById('ui-layer');
+
+if (uiLayer) {
+    uiLayer.addEventListener('click', function(e) {
+        // Fallback for older editors to find the clicked item safely
+        var targetElement = e.target || e.srcElement;
+        if (!targetElement) return;
+
+        // Force the editor to know this is an element with attributes
+        if ('getAttribute' in targetElement) {
+            var action = targetElement.getAttribute('data-action');
+            if (!action) return;
+
+            if (action === 'start') {
+                showScreen(null); 
+                initGameEngine();
+            } else if (action === 'settings') {
+                showScreen('settings');
+            } else if (action === 'credits') {
+                showScreen('credits');
+            } else if (action === 'back') {
+                showScreen('main');
+            }
+        }
+    });
+}
+
+function initGameEngine() {
+    console.log('Game started');
+}
+
+    </script>
+</body>
+</html>

@@ -31,8 +31,8 @@ export function add_knight() {
 export function add_rat_overworld() {
   return new Sprite(
     "/static/img/sprites/add_rat_overworld.png", // src for img
-    32, // width
-    32, // height
+    64, // width
+    64, // height
     0, // x
     0, // y
     7, // frame count

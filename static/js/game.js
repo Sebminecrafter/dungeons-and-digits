@@ -38,6 +38,46 @@ function calcGlobals() {
   timer = (new Date().getTime() - start) / 1000;
 }
 
+function drawFullscreenButton() {
+  const size = Math.min(canvas.width, canvas.height) * 0.08;
+  const x = canvas.width - size - 10;
+  const y = 10;
+
+  ctx.fillStyle = "#222";
+  ctx.fillRect(x, y, size, size);
+
+  // Draw fullscreen corners
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = Math.max(2, size * 0.08);
+
+  const padding = size * 0.25;
+  const corner = size * 0.25;
+
+  ctx.beginPath();
+
+  // Top-left
+  ctx.moveTo(x + padding, y + padding + corner);
+  ctx.lineTo(x + padding, y + padding);
+  ctx.lineTo(x + padding + corner, y + padding);
+
+  // Top-right
+  ctx.moveTo(x + size - padding - corner, y + padding);
+  ctx.lineTo(x + size - padding, y + padding);
+  ctx.lineTo(x + size - padding, y + padding + corner);
+
+  // Bottom-left
+  ctx.moveTo(x + padding, y + size - padding - corner);
+  ctx.lineTo(x + padding, y + size - padding);
+  ctx.lineTo(x + padding + corner, y + size - padding);
+
+  // Bottom-right
+  ctx.moveTo(x + size - padding - corner, y + size - padding);
+  ctx.lineTo(x + size - padding, y + size - padding);
+  ctx.lineTo(x + size - padding, y + size - padding - corner);
+
+  ctx.stroke();
+}
+
 // Update player position based on input
 function updatePlayerPosition() {
   if (!(player instanceof classes.Sprite)) {
@@ -116,6 +156,8 @@ function gameLoop() {
     }
   }
 
+  drawFullscreenButton();
+
   requestAnimationFrame(gameLoop);
 }
 
@@ -177,6 +219,7 @@ function setup() {
   window.addEventListener("keyup", (e) => {
     keys[e.key] = false;
   });
+  document.addEventListener("fullscreenchange", resizeCanvas);
 
   // Resize it properly
   resizeCanvas();
@@ -205,6 +248,30 @@ function setup() {
   }
 
   calcGlobals();
+
+  canvas.addEventListener("click", (e) => {
+    const rect = canvas.getBoundingClientRect();
+
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    const size = Math.min(canvas.width, canvas.height) * 0.08;
+    const buttonX = canvas.width - size - 10;
+    const buttonY = 10;
+
+    if (
+      x >= buttonX &&
+      x <= buttonX + size &&
+      y >= buttonY &&
+      y <= buttonY + size
+    ) {
+      if (!document.fullscreenElement) {
+        canvas.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  });
 
   player.setX(centerX);
   player.setY(centerY);

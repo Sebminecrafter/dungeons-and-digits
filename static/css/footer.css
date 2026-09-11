@@ -3,7 +3,7 @@ footer {
     flex-direction: row;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.15);
-    min-height: 10%;
+    min-height: 10vh;
     flex-shrink: 0;
     text-align: center;
     align-content: center;

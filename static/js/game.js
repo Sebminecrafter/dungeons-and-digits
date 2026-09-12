@@ -14,9 +14,10 @@ var centerX;
 var centerY;
 var spriteList;
 
-var playerDirection = { up: false, down: false, left: false, right: false };
-
 var speed = 5;
+
+var playerDirection = { up: false, down: false, left: false, right: false };
+var fullscreenButton = { size: 50, x: 10, y: 10 };
 
 function drawBackground() {
   const oldStyle = ctx.fillStyle;
@@ -36,46 +37,21 @@ function calcGlobals() {
   centerX = canvas.width / 2 - player.getWidth() / 2;
   centerY = canvas.height / 2 - player.getHeight() / 2;
   timer = (new Date().getTime() - start) / 1000;
+  fullscreenButton = {
+    size: Math.min(canvas.width, canvas.height) * 0.06,
+    x: canvas.width - fullscreenButton["size"] - 10,
+    y: 10,
+  };
 }
 
 function drawFullscreenButton() {
-  const size = Math.min(canvas.width, canvas.height) * 0.08;
-  const x = canvas.width - size - 10;
-  const y = 10;
-
   ctx.fillStyle = "#222";
-  ctx.fillRect(x, y, size, size);
-
-  // Draw fullscreen corners
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = Math.max(2, size * 0.08);
-
-  const padding = size * 0.25;
-  const corner = size * 0.25;
-
-  ctx.beginPath();
-
-  // Top-left
-  ctx.moveTo(x + padding, y + padding + corner);
-  ctx.lineTo(x + padding, y + padding);
-  ctx.lineTo(x + padding + corner, y + padding);
-
-  // Top-right
-  ctx.moveTo(x + size - padding - corner, y + padding);
-  ctx.lineTo(x + size - padding, y + padding);
-  ctx.lineTo(x + size - padding, y + padding + corner);
-
-  // Bottom-left
-  ctx.moveTo(x + padding, y + size - padding - corner);
-  ctx.lineTo(x + padding, y + size - padding);
-  ctx.lineTo(x + padding + corner, y + size - padding);
-
-  // Bottom-right
-  ctx.moveTo(x + size - padding - corner, y + size - padding);
-  ctx.lineTo(x + size - padding, y + size - padding);
-  ctx.lineTo(x + size - padding, y + size - padding - corner);
-
-  ctx.stroke();
+  ctx.fillRect(
+    fullscreenButton.x,
+    fullscreenButton.y,
+    fullscreenButton.size,
+    fullscreenButton.size,
+  );
 }
 
 // Update player position based on input
@@ -132,6 +108,21 @@ function playerAnimation() {
     else if (anim == 4 || anim == 5 || anim == 6) player.setAnimation(4);
     else if (anim == 7 || anim == 8 || anim == 9) player.setAnimation(7);
     else player.setAnimation(4);
+  }
+}
+
+function clickAt(x, y) {
+  if (
+    x >= fullscreenButton.x &&
+    x <= fullscreenButton.x + fullscreenButton.size &&
+    y >= fullscreenButton.y &&
+    y <= fullscreenButton.y + fullscreenButton.size
+  ) {
+    if (!document.fullscreenElement) {
+      canvas.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
   }
 }
 
@@ -255,22 +246,7 @@ function setup() {
     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-    const size = Math.min(canvas.width, canvas.height) * 0.08;
-    const buttonX = canvas.width - size - 10;
-    const buttonY = 10;
-
-    if (
-      x >= buttonX &&
-      x <= buttonX + size &&
-      y >= buttonY &&
-      y <= buttonY + size
-    ) {
-      if (!document.fullscreenElement) {
-        canvas.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    }
+    clickAt(x, y);
   });
 
   player.setX(centerX);

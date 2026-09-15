@@ -17,6 +17,7 @@
     width: 100%;
     height: 100%;
     background: #fff;
+    overflow: hidden;
     pointer-events: auto;
 }
 
@@ -27,11 +28,50 @@
     position: relative;
 }
 
+.screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--menu-background, none);
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: transform 0.35s ease-out;
+}
+
+.screen:has(.menu-opt:hover)::before,
+.screen:has(.menu-opt:focus-visible)::before {
+    transform: translateX(0);
+}
+
+#screen-main:has(.menu-opt[data-action="start"]:hover),
+#screen-main:has(.menu-opt[data-action="start"]:focus-visible) {
+    --menu-background: url("/static/img/gui/menu-bg/campaign.png");
+}
+
+#screen-main:has(.menu-opt[data-action="trial"]:hover),
+#screen-main:has(.menu-opt[data-action="trial"]:focus-visible) {
+    --menu-background: url("/static/img/gui/menu-bg/trial.png");
+}
+
+#screen-main:has(.menu-opt[data-action="settings"]:hover),
+#screen-main:has(.menu-opt[data-action="settings"]:focus-visible) {
+    --menu-background: url("/static/img/gui/menu-bg/settings.png");
+}
+
+#screen-main:has(.menu-opt[data-action="credits"]:hover),
+#screen-main:has(.menu-opt[data-action="credits"]:focus-visible) {
+    --menu-background: url("/static/img/gui/menu-bg/credits.png");
+}
+
 .menu-wrapper {
     position: absolute;
     right: 5%;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;

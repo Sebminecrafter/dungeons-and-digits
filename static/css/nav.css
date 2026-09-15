@@ -1,4 +1,4 @@
-nav {
+header nav {
     display: flex;
     align-items: center;
     font-family: var(--blackletter-font-3);
@@ -7,17 +7,17 @@ nav {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-nav .logo {
+header nav .logo {
     display: flex;
     height: 100%;
     align-items: center;
 }
 
-nav .logo p {
+header nav .logo p {
     font-weight: bold;
 }
 
-nav .logo img {
+header nav .logo img {
     height: 75%;
     width: auto;
     max-width: 100%;

@@ -17,7 +17,8 @@ var spriteList;
 var speed = 5;
 
 var playerDirection = { up: false, down: false, left: false, right: false };
-var fullscreenButton = { size: 50, x: 10, y: 10 };
+var fullscreenButton = { size: 50, x: 10, y: 10 },
+  fullscreenButtonImg;
 
 function drawBackground() {
   const oldStyle = ctx.fillStyle;
@@ -45,8 +46,12 @@ function calcGlobals() {
 }
 
 function drawFullscreenButton() {
-  ctx.fillStyle = "#222";
-  ctx.fillRect(
+  if (!fullscreenButtonImg) {
+    fullscreenButtonImg = new Image();
+    fullscreenButtonImg.src = "/static/img/gui/full_screen.png";
+  }
+  ctx.drawImage(
+    fullscreenButtonImg,
     fullscreenButton.x,
     fullscreenButton.y,
     fullscreenButton.size,

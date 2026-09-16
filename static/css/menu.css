@@ -39,6 +39,7 @@
     pointer-events: none;
     transform: translateX(-100%);
     transition: transform 0.35s ease-out;
+    image-rendering: pixelated;
 }
 
 .screen:has(.menu-opt:hover)::before,
@@ -64,6 +65,19 @@
 #screen-main:has(.menu-opt[data-action="credits"]:hover),
 #screen-main:has(.menu-opt[data-action="credits"]:focus-visible) {
     --menu-background: url("/static/img/gui/menu-bg/credits.png");
+}
+
+#screen-settings.active {
+    --menu-background: url("/static/img/gui/menu-bg/settings.png");
+}
+
+#screen-credits.active {
+    --menu-background: url("/static/img/gui/menu-bg/credits.png");
+}
+
+#screen-settings.active::before,
+#screen-credits.active::before {
+    transform: translateX(0);
 }
 
 .menu-wrapper {

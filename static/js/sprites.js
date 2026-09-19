@@ -84,6 +84,20 @@ export function not_so_basic_addition() {
   );
 }
 
+export function melon_ground() {
+  return new Sprite(
+    "/static/img/sprites/mel0n_ground.png", // src for img
+    32, // width
+    32, // height
+    0, // x
+    0, // y
+    1, // frame count
+    0, // animation
+    1, // rows
+    1, // columns
+  );
+}
+
 export default {
   player,
   add_knight,
@@ -91,4 +105,5 @@ export default {
   basic_addition,
   basic_addition_guard,
   not_so_basic_addition,
+  melon_ground,
 };

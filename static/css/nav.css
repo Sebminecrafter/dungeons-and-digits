@@ -17,6 +17,11 @@ header nav .logo p {
     font-weight: bold;
 }
 
+.smallerImg{
+    height: 50px;
+    width: auto;
+}
+
 header nav .logo img {
     height: 75%;
     width: auto;

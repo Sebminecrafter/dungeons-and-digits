@@ -18,8 +18,8 @@ header nav .logo p {
 }
 
 .smallerImg{
-    height: 25%;
-    width: auto;
+    height: auto;
+    width: 100px;
 }
 
 header nav .logo img {

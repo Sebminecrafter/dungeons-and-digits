@@ -46,6 +46,10 @@ main {
     min-height: 0;
     overflow: hidden;
 }
+.smallerImg{
+    height: auto;
+    width: 100px;
+}
 
 a,
 a:visited {

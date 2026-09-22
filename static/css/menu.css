@@ -37,33 +37,49 @@
     background-repeat: no-repeat;
     background-size: contain;
     pointer-events: none;
-    transform: translateX(-100%);
-    transition: transform 0.35s ease-out;
     image-rendering: pixelated;
+}
+
+/* Background slides in every time a new button is hovered. */
+
+@keyframes menu-background-in {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
 
 .screen:has(.menu-opt:hover)::before,
 .screen:has(.menu-opt:focus-visible)::before {
-    transform: translateX(0);
+    animation: menu-background-in 0.35s ease-out;
 }
 
-#screen-main:has(.menu-opt[data-action="start"]:hover),
-#screen-main:has(.menu-opt[data-action="start"]:focus-visible) {
+/* Each button gets its own animation trigger. */
+
+*[active-button] {
+    animation: menu-background-in 0.35s ease-out;
+}
+
+#screen-main:has(
+    .menu-opt[data-action="start"][active-button])::before {
     --menu-background: url("/static/img/gui/menu-bg/campaign.png");
 }
 
-#screen-main:has(.menu-opt[data-action="trial"]:hover),
-#screen-main:has(.menu-opt[data-action="trial"]:focus-visible) {
+#screen-main:has(
+    .menu-opt[data-action="trial"][active-button])::before {
     --menu-background: url("/static/img/gui/menu-bg/trial.png");
 }
 
-#screen-main:has(.menu-opt[data-action="settings"]:hover),
-#screen-main:has(.menu-opt[data-action="settings"]:focus-visible) {
+#screen-main:has(
+    .menu-opt[data-action="settings"][active-button])::before {
     --menu-background: url("/static/img/gui/menu-bg/settings.png");
 }
 
-#screen-main:has(.menu-opt[data-action="credits"]:hover),
-#screen-main:has(.menu-opt[data-action="credits"]:focus-visible) {
+#screen-main:has(
+    .menu-opt[data-action="credits"][active-button])::before {
     --menu-background: url("/static/img/gui/menu-bg/credits.png");
 }
 
@@ -125,14 +141,17 @@
         color 0.15s;
 }
 
-.menu-opt:hover {
+.menu-opt:hover,
+.menu-opt:focus-visible {
     transform: scale(1.05);
 }
+
 .menu-opt:active {
     transform: scale(0.95);
 }
 
-.menu-opt:hover::after {
+.menu-opt:hover::after,
+.menu-opt:focus-visible::after {
     content: "";
     position: absolute;
     inset: 0;

@@ -27,6 +27,7 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: var(--sans-font);
+    cursor:url(/static/img/lcv.png) 16, 16, auto; /* change URL for cursor img*/
 }
 
 body {

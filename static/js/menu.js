@@ -121,7 +121,7 @@ if (uiLayer) {
         showScreen("settings");
         break;
       case "trial":
-        window.location.href = "trial.html";
+        window.location.href = "/static/pages/trial.html";
         break;
       case "credits":
         showScreen("credits");

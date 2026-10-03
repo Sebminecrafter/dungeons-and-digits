@@ -24,6 +24,15 @@ app.get("/play", async (_request, response) => {
     );
 });
 
+app.get("/trial", async (_request, response) => {
+    response.send(
+        await helpers.getStaticHtml(
+            "trial.html",
+            "Dungeons and Digits"
+        )
+    );
+});
+
 app.get("/testing", async (_request, response) => {
     response.send(
         await helpers.getStaticHtml(
